@@ -1,14 +1,36 @@
-import React, {Component, Fragment} from 'react';
+import React, {Fragment, Component} from 'react';
 
 
+class Search extends Component{
+    state = {
+        text: ''
+    }
+   onChange = (e)=> this.setState({[e.target.name]: e.target.value});
+   onSubmit = (e)=>{ 
+    e.preventDefault();
+    this.props.searchUsers(this.state.text);
+    this.setState({text: ''});
 
-const Search = (props)=>{
-    return(
-        <Fragment>
-            <input type='text' className='form-text' placeholder="Search" aria-label="Search" /><button type='submit' className='btn btn-primary'>submit</button>
-        </Fragment>
-        
-    )
+    }
+    render(){
+        return(
+
+            <Fragment>
+                <form onSubmit={this.onSubmit} className='form'>
+                    <input 
+                    type='text' 
+                    name='text' 
+                    placeholder="Search users" 
+                    value={this.state.text}
+                    onChange = {this.onChange}
+                    />
+                    <input type='submit' value='Search' className='btn btn-primary btn-block'/>
+                </form>
+            </Fragment>
+            
+        )
+    }
 }
+
 
 export default Search;
