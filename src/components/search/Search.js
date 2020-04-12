@@ -1,5 +1,6 @@
 import React, {Fragment, Component} from 'react';
 import PropsType from 'prop-types';
+import Alert from '../alert/Alert';
 
 class Search extends Component{
     state = {
@@ -10,8 +11,12 @@ class Search extends Component{
         searchUsers: PropsType.func.isRequired,
         clearUsers: PropsType.func.isRequired
     }
-
-   onChange = (e)=> this.setState({[e.target.name]: e.target.value});
+   onChange = (e)=> {
+       if(e.target){
+            this.props.clearTxt('');
+            this.setState({[e.target.name]: e.target.value})
+       }
+    };
    onSubmit = (e)=>{ 
     e.preventDefault();
     this.props.searchUsers(this.state.text);
@@ -20,11 +25,11 @@ class Search extends Component{
     }
 
     render(){
-        const {showClear,clearUsers, alert } = this.props;
+        const {showClear,clearUsers} = this.props;
         return(
 
             <Fragment>
-                <h1>{alert}</h1>
+                <Alert />
                 <form onSubmit={this.onSubmit} className='form'>
                     <input 
                     type='text' 
