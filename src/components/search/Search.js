@@ -1,10 +1,16 @@
 import React, {Fragment, Component} from 'react';
-
+import PropsType from 'prop-types';
 
 class Search extends Component{
     state = {
         text: ''
     }
+
+    static propsTypes = {
+        searchUsers: PropsType.func.isRequired,
+        clearUsers: PropsType.func.isRequired
+    }
+
    onChange = (e)=> this.setState({[e.target.name]: e.target.value});
    onSubmit = (e)=>{ 
     e.preventDefault();
@@ -12,10 +18,13 @@ class Search extends Component{
     this.setState({text: ''});
 
     }
+
     render(){
+        const {showClear,clearUsers, alert } = this.props;
         return(
 
             <Fragment>
+                <h1>{alert}</h1>
                 <form onSubmit={this.onSubmit} className='form'>
                     <input 
                     type='text' 
@@ -26,6 +35,8 @@ class Search extends Component{
                     />
                     <input type='submit' value='Search' className='btn btn-primary btn-block'/>
                 </form>
+                {showClear && <button className='btn btn-link btn-block' onClick = {clearUsers}>Clear</button>}
+                
             </Fragment>
             
         )
