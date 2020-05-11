@@ -40,7 +40,7 @@ class Search extends Component{
                     />
                     <input type='submit' value='Search' className='btn btn-primary btn-block'/>
                 </form>
-                {showClear && <button className='btn btn-link btn-block' onClick = {clearUsers}>Clear</button>}
+                {showClear && <button className='btn btn-link btn-block' onClick = {clearUsers} style={{color:'white'}}>Clear</button>}
                 
             </Fragment>
             
