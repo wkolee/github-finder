@@ -9,7 +9,7 @@ import Spinner from '../layout/Spinner';
         {repos.map(val => (
             <div key={val.id}>
                 <a href={`${val.html_url}`} >
-                    {val.html_url}
+                    {val.name}
                 </a> 
             </div>
         ))}
