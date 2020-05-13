@@ -1,52 +1,48 @@
-import React, {Fragment, Component} from 'react';
+import React, {Fragment, useState, useContext} from 'react';
 import PropsType from 'prop-types';
-import Alert from '../alert/Alert';
+import GithubContext from '../../context/github/githubContext';
 
-class Search extends Component{
-    state = {
-        text: ''
-    }
+const Search = ({showClear,clearUsers, clearTxt})=>{
+    const githubContext = useContext(GithubContext);
 
-    static propsTypes = {
-        searchUsers: PropsType.func.isRequired,
-        clearUsers: PropsType.func.isRequired
-    }
-   onChange = (e)=> {
-       if(e.target){
-            this.props.clearTxt('');
-            this.setState({[e.target.name]: e.target.value})
-       }
+    const [text, setText] = useState(null);
+     
+
+    
+   const onChange = (e)=> {
+        githubContext.clearTxt();
+        setText(e.target.value)    
     };
-   onSubmit = (e)=>{ 
-    e.preventDefault();
-    this.props.searchUsers(this.state.text);
-    this.setState({text: ''});
+   const onSubmit = (e)=>{ 
+        e.preventDefault();
+        githubContext.searchUsers(text);
+        setText(e.target.value)
 
     }
 
-    render(){
-        const {showClear,clearUsers} = this.props;
+    
         return(
-
             <Fragment>
-                <Alert />
-                <form onSubmit={this.onSubmit} className='form'>
+                <form onSubmit={onSubmit} className='form'>
                     <input 
                     type='text' 
                     name='text' 
                     placeholder="Search users" 
-                    value={this.state.text}
-                    onChange = {this.onChange}
+                    value={text || " "}
+                    onChange = {onChange}
                     />
                     <input type='submit' value='Search' className='btn btn-primary btn-block'/>
                 </form>
-                {showClear && <button className='btn btn-link btn-block' onClick = {clearUsers} style={{color:'white'}}>Clear</button>}
+                <button className='btn btn-link btn-block' onClick = {githubContext.clearUsers} style={{color:'white'}}>Clear</button>
                 
             </Fragment>
             
         )
-    }
+    
 }
 
-
+ Search.propsTypes = {
+    clearUsers: PropsType.func.isRequired,
+    text: PropsType.string.isRequired
+}
 export default Search;

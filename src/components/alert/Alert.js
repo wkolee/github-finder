@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import GithubContext from '../../context/github/githubContext';
 
-
-const Alert = ({alertTxt})=>{
+const Alert = ()=>{
+    const githubContext = useContext(GithubContext);
+ 
     return(
             <h3 style={{textAlign: 'center', color: 'red'}}>
-                {alertTxt}
+                {githubContext.alert}
             </h3>
         )
 }

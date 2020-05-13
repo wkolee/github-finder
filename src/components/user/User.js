@@ -1,19 +1,27 @@
-import React, { Component, Fragment } from 'react';
+import React, { useEffect, Fragment, useContext } from 'react';
 import Spinner from '../layout/Spinner';
 import {Link} from 'react-router-dom';
 import Repos from '../repos/Repos';
+import GithubContext from '../../context/github/githubContext';
 
 
 
-export default class User extends Component {
-    componentDidMount(){
-        this.props.singleUser(this.props.match.params.login);
-        this.props.getRepos(this.props.match.params.login);
-    }
+const  User =(props)=>{
+const githubContext = useContext(GithubContext);
+const {singleUser, getRepos, repos, user, clearTxt, loading} = githubContext;
+console.log('fdgfgffggfgng',user)
+    useEffect(()=>{
+       singleUser(props.match.params.login);
+       getRepos(props.match.params.login);
+       clearTxt();
+    //eslint-disable-next-line
+    },[])
+        
+    
 
-    render() {
-        const {name, avatar_url, html_url,bio, location, followers, following, hireable} = this.props.user;
-        const {loading, repos} = this.props;
+    
+        const {name, avatar_url, html_url,bio, location, followers, following, hireable} = user;
+        
         if(loading) return <Spinner />;
         return (
             <Fragment>
@@ -42,10 +50,10 @@ export default class User extends Component {
                     <button className='btn btn-primary'>Followers: {followers}</button>
                     <button className='btn btn-primary'>Following: {following}</button>
                 </div>
-
-                <Repos repos = {repos} loading={loading}/>
-                
+                <Repos repos = {repos} loading={loading}/> 
             </Fragment> 
         )
-    }
+    
 }
+
+export default User;

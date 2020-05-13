@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Spinner from '../layout/Spinner';
+import GithubContext from '../../context/github/githubContext';
 
- const Repos = ({repos, loading}) => {
+ const Repos = () => {
+     const githubContext = useContext(GithubContext);
+     const {loading, repos} = githubContext;
+
      if(loading){return <Spinner/>};
     return (
         <div className='card grid-2'>
